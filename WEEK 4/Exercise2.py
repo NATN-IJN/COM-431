@@ -1,9 +1,10 @@
 class Student:
-    def __init__(self, stud_id, name, course, mark):
+    def __init__(self, stud_id, name, course):
         self.stud_id = stud_id
         self.name = name
         self.course = course
-        self.mark = mark
+        self.mark = 0
+
 
     def setmark(self, mark):
         if 0 <= mark <= 100:
@@ -24,5 +25,5 @@ class Student:
         else:
             print("Fail")
 
-    def __str__(self):
-        return f"ID: {self.stud_id}, Name: {self.name}, Course: {self.course}, Mark: {self.mark}, Grade: {self.printgrade()}"
+    def print(self):
+        print(f"ID: {self.stud_id}, Name: {self.name}, Course: {self.course}, Mark: {self.mark}")
