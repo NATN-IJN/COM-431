@@ -7,7 +7,7 @@ class Stack:
 
       def pop(self):
           if len(self.internalList) == 0:
-             print("Stack is empty")
+             raise Exception("Stack is empty")
              return None
           else:
               top_item = self.internalList[-1]
