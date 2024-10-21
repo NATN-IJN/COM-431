@@ -7,6 +7,9 @@ class Stack:
         pass
 
     def pop(self):
+        top_item = self.internalList[-1]
+        del self.internalList[-1]
+        return top_item
         pass
 
     def peek(self):
