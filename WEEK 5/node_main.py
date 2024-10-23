@@ -1,12 +1,23 @@
-from node import Node
 from linkedlist import LinkedList
 
-n1 = Node("Fred")
-n2 = Node("Tom")
+from linkedlist import LinkedList
 
-print(n1)
-print(n2)
+linked_list = LinkedList()
 
-node1=LinkedList()
-node1.add(self)
+
+linked_list.add(1)
+linked_list.add(2)
+linked_list.add(3)
+
+
+try:
+    print(linked_list.get(0))
+    print(linked_list.get(1))
+    print(linked_list.get(2))
+    print(linked_list.get(10))
+except IndexError as e:
+    print(e)
+
+linked_list.insert(1, 1.5)
+print(linked_list.get(1))
 
