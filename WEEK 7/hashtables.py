@@ -60,8 +60,11 @@ class HashTable:
         bucket_index = code%127
         self.buckets[bucket_index].add(key, value)
 
-    def get(self,key):
+    def search(self,key):
         code = self.hash(key)
+        bucket_index = code % 127
+        return self.buckets[bucket_index].find(key)
+
 
 
 
