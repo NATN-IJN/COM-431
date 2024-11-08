@@ -45,7 +45,7 @@ class TuplesLinkedList:
 class HashTable:
     def __init__(self,size=127):
         self.size = size
-        self.buckets = [TuplesLinkedList() for _ in range(self.size)]
+        self.buckets = [TuplesLinkedList() for i in range(self.size)]
 
     def hash(self,key):
         hash_code = 0
@@ -83,7 +83,6 @@ ht.put('cat','Meow')
 ht.put('act', 'movies')
 print(ht.search('cat'))
 print(ht.search('act'))
-
 
 
 
