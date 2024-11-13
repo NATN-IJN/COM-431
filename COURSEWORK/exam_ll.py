@@ -10,7 +10,8 @@ class TupleLinkedLists:
         self.value = value
         key = input("Please enter a key: ")
         value = input("Please enter a value: ")
-        tupl = (key, value)
+        description = input("Please enter a description: ")
+        tupl = (key, value, description)
         new_node = Node(tupl)
         if self.head is None:
             self.head = Node(tupl)
@@ -28,8 +29,8 @@ class TupleLinkedLists:
         currentnode = self.head
         while currentnode is not None:
             if currentnode.value[0] == searchinput:
-                print(currentnode.value[1])
-                return currentnode.value[1]
+                print(f"Value: {currentnode.value[1]}, Description: {currentnode.value[2]}")
+                return currentnode.value[1], currentnode.value[2]
             else:
                 currentnode = currentnode.next
         return None
@@ -37,18 +38,27 @@ class TupleLinkedLists:
     def save(self, file_input):
         self.file_input = file_input
         file_input = input("Please enter a POI to save: ")
-        with open('poi.txt', "a") as f:
-            f.write(file_input + '\n')
-        print(f"{file_input} will be appended")
+        currentnode = self.head
+        while currentnode is not None:
+            if currentnode.value[0] == file_input:
+                file_input = currentnode.value[0]
+                value = currentnode.value[1]
+                description = currentnode.value[2]
+
+
+                tupl = [f"  Name: {(file_input)}  |  Value: {(value)}  |  Description: {(description)}  "]
+                with open('poi.txt', "a") as f:
+                        f.write(f'{tupl}\n')
+                print(f"{tupl} will be saved")
+                break
 
         ans = 0
         while ans != "y" and ans != "n":
             ans = input("Would you like to view saved  Points Of Interest? (y/n): ").lower()
             if ans == 'y':
                 with open('poi.txt', 'r') as f:
-                    for line in f:
-                        for word in line.split():
-                            print(word)
+                   content = f.read()
+                print(content)
 
             elif ans == 'n':
                 return None
@@ -67,6 +77,12 @@ class TupleLinkedLists:
             else:
                 currentnode = currentnode.next
         return None
+
+    # def sort(self):
+    #     print("Sorting...")
+
+
+
 
 
 
