@@ -1,5 +1,6 @@
 from exam_node import Node
 
+import random
 
 class TuplesLinkedList:
     def __init__(self):
@@ -7,17 +8,18 @@ class TuplesLinkedList:
         self.last = None
 
 
-    def add(self, key, value, description, hash_code):
-        key_value = (key, value, description, hash_code)
+    def add(self, key, value, description, uid):
+        key_value = (key, value, description, uid)
         n = Node(key_value)
         if self.first is None:
             self.first = n
             self.last = n
-            print(f"Succesfully added first: {n}")
+            print(f"Successfully added first: {n}")
         else:
             self.last.link(n)
             self.last = n
-            print(f"Succesfully added: {n}")
+            print(f"Successfully added: {n}")
+
 
     def get(self, index):
         counter = 0
@@ -35,7 +37,8 @@ class TuplesLinkedList:
         currentNode = self.first
         while currentNode is not None:
             if currentNode.value[0] == searchInput:
-                return (f"Value: {currentNode.value[1]}, Description: {currentNode.value[2]}")
+                print(f"Value: {currentNode.value[1]}, Description: {currentNode.value[2]}")
+                return
             else:
                 currentNode = currentNode.next
         return
@@ -113,39 +116,33 @@ class HashTable:
             index+=1
         return hash_code
 
-    def put(self, key, value, description, hash_code):
+    def put(self, key, value, description, uid):
         self.key = key
         self.value = value
         self.description = description
-        self.hash_code = hash_code
+        self.uid = uid
         key = input("Please enter a key")
         value = input("Please enter a value")
         description = input("Please enter a description")
+        uid =(random.randint(0,self.size))
         hash_code = self.hash(key)
-        bucket_index = hash_code%127
-        self.buckets[bucket_index].add(key, value, description, hash_code)
-        print(f"ID: {hash_code}")
+        bucket_index = (hash_code%127) - uid
+        self.buckets[bucket_index].add(key, value, description, uid)
+        print(f"ID: {uid}")
         return
 
-    def search(self,key, id):
+    def search(self, key, uid):
         self.key = key
-        self.id = id
-        print("""
-        Please Enter either 1 or 2
-        
-        1. Search by key: 
-        2. Search by ID number: """)
-        ans = input()
+        self.id = uid
 
-        if ans == '1':
-            key = input("Please enter a key to search")
-            code = self.hash(key)
-            bucket_index = code % 127
-            return self.buckets[bucket_index].findkey(key)
-        elif ans == '2':
-            id = int(input("Please enter an ID number: "))
-            bucket_index = id % 127
-            return self.buckets[bucket_index].findid(id)
+        key = input("Please enter a key to search")
+        uid = int(input("Please enter the id number "))
+        code = self.hash(key)
+        bucket_index = (code % 127) - uid
+        return self.buckets[bucket_index].findkey(key)
+
+
+
 
 
 
@@ -165,11 +162,6 @@ class HashTable:
     def dply(self):
         for i in range(len(self.buckets)):
                 self.buckets[i].display()
-
-
-
-
-
 
 
 ht = HashTable()
@@ -194,7 +186,7 @@ while True:
             if menu == 1:
                 ht.put('', '', '', '')
             elif menu == 2:
-                print(ht.search('', ''))
+                 ht.search('', '')
             elif menu == 3:
                 ht.delete()
             elif menu == 4:
