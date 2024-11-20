@@ -16,29 +16,6 @@ class Node:
         self.next = None
         self.value = None
 
-    # def split(head):
-    #     fast = head
-    #     slow = head
-    #     while fast and fast.next:
-    #         fast = fast.next.next
-    #         slow = slow.next
-    #
-    #     secondhalf = slow.next
-    #     slow.next = None
-    #     return secondhalf
-    #
-    # def merge(first, second):
-    #     if not first:
-    #         return second
-    #     if not second:
-    #         return first
-    #
-    #     if first.data < second.data:
-    #         first.next = merge(first,second.next)
-    #         return first
-    #     else:
-    #         second.next = merge(first,second.next)
-    #         return second
 
     # def split(self, head):
     #     self.head = head
@@ -73,6 +50,13 @@ class Node:
     #             second.next.prev = second
     #         second.prev = None
     #         return second
+    # def Mergesort(self, head)
+    #     self.head = head
+    #     if head is None or head.next is None
+    #         return head
+    #     second = split(head)
+    #     head = MergeSort(head)
+    #     return self.merge(head, second)
 
 
     def __str__(self):

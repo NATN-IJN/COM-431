@@ -94,13 +94,28 @@ class TuplesLinkedList:
 
     def display(self):
         currentnode = self.first
+        newdict = {}
         if currentnode is not None:
             while currentnode is not None:
-                print(f"  Name: {currentnode.value[0]}  |  Value:  {currentnode.value[1]}  |  Description:  {currentnode.value[2]}  ")
+                newdict.update({currentnode.value[0]: [currentnode.value[1], currentnode.value[2], currentnode.value[3]]})
+                sdict1 = dict(sorted(newdict.items()))
+                print(sdict1)
                 return currentnode.value[0], currentnode.value[1], currentnode.value[2]
         else:
-            print("empty")
             return None
+
+    # def display(self):
+    #     currentnode = self.first
+    #     slist = {}
+    #     if currentnode is not None:
+    #         while currentnode is not None:
+    #             slist.append(f"  Name: {currentnode.value[0]}  |  Value:  {currentnode.value[1]}  |  Description:  {currentnode.value[2]}  ")
+    #             print(slist)
+    #             return currentnode.value[0], currentnode.value[1], currentnode.value[2]
+    #     else:
+    #         return None
+
+    # def sort_list(self):
 
 class HashTable:
     def __init__(self,size=127):
@@ -157,8 +172,9 @@ class HashTable:
 
     def save(self):
         file_input = input("Please enter a POI to save: ").lower()
+        uid = int(input("Please enter the id number "))
         hash_code = self.hash(file_input)
-        bucket_index = hash_code % 127
+        bucket_index = (hash_code % 127) - uid
         self.buckets[bucket_index].sve(file_input)
 
     def dply(self):
