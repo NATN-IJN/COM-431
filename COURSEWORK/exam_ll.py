@@ -5,10 +5,11 @@ class TupleLinkedLists:
         self.head = None
         self.tail = None
 
-    def add(self, key, value):
+    def add(self, key, value, description):
         self.key = key
         self.value = value
-        key = input("Please enter a key: ")
+        self.description = description
+        key = input("Please enter a key: ").lower()
         value = input("Please enter a value: ")
         description = input("Please enter a description: ")
         tupl = (key, value, description)
@@ -16,16 +17,17 @@ class TupleLinkedLists:
         if self.head is None:
             self.head = Node(tupl)
             self.tail = Node(tupl)
-            print(f"Succesfully added: {new_node}")
+            print(f"Succesfully added first: {new_node}")
             return
         else:
             self.tail.link(new_node)
-            self.tail = new_node
+            self.tail.next = new_node
+            print(f"Succesfully added: {new_node}")
             return
 
 
     def find(self):
-        searchinput = input("Please enter a key to search: ")
+        searchinput = input("Please enter a key to search: ").lower()
         currentnode = self.head
         while currentnode is not None:
             if currentnode.value[0] == searchinput:
@@ -37,7 +39,7 @@ class TupleLinkedLists:
 
     def save(self, file_input):
         self.file_input = file_input
-        file_input = input("Please enter a POI to save: ")
+        file_input = input("Please enter a POI to save: ").lower()
         currentnode = self.head
         while currentnode is not None:
             if currentnode.value[0] == file_input:
@@ -82,16 +84,58 @@ class TupleLinkedLists:
     #     print("Sorting...")
 
 
+    def display(self):
+        currentnode = self.head
+        if currentnode is not None:
+            while currentnode is not None:
+                print(f"  Name: {currentnode.value[0]}  |  Value:  {currentnode.value[1]}  |  Description:  {currentnode.value[2]}  ")
 
-
-
+                return currentnode.value[0], currentnode.value[1], currentnode.value[2]
+        else:
+            print("Database empty")
+            return None
 
 
 
 tll = TupleLinkedLists()
-tll.add('cat', 'meow')
-tll.find()
-tll.save(file_input='poi.txt')
-tll.dlt()
+# tll.add('', '', '' )
+# tll.display()
+# tll.find()
+# tll.save(file_input='poi.txt')
+# tll.dlt()
+
+
+while True:
+        print("""Please enter a number
+          1. Add POI
+          2. Search POI
+          3. Delete POI
+          4. Save POI
+          5. Display POI
+          6. Exit""")
+#Create menu
+        menu = int(input())
+        try:
+            if menu == 1:
+                tll.add('', '', '')
+            elif menu == 2:
+                tll.find()
+            elif menu == 3:
+                tll.dlt()
+            elif menu == 4:
+                tll.save(file_input='poi.txt')
+            elif menu == 5:
+                tll.display()
+            elif menu == 8:
+                print("Application terminated")
+                break
+
+        except ValueError:
+            print("Invalid input! Please enter a valid number")
+        except TypeError:
+            print("Invalid input! Please enter a number")
+
+
+
 
 
