@@ -142,14 +142,16 @@ class HashTable:
         return self.buckets[bucket_index].findkey(key)
 
 
+    # def sort(self):
 
 
 
 
     def delete(self):
         poi = input("Please enter a key to delete")
+        uid = int(input("Please enter the id number "))
         hash_code = self.hash(poi)
-        bucket_index = hash_code % 127
+        bucket_index = (hash_code % 127) - uid
         self.buckets[bucket_index].dlt(poi)
         return
 
