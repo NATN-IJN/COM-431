@@ -4,3 +4,4 @@
 ['  NAME: E  |  AGE: U  |  GENRE: Christmas  ']
 ['  NAME: Miricale on 34th Street  |  AGE: U  |  GENRE: Christmas  ']
 ['  NAME: The Batman  |  AGE: 15  |  GENRE: Action  ']
+['  NAME: Elf  |  AGE: U  |  GENRE: Christmas  ']

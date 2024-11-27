@@ -1,5 +1,5 @@
 from exam_node import Node
-
+from merge_sort import MS
 import random
 class TuplesLinkedList:
     def __init__(self):
@@ -111,55 +111,6 @@ class TuplesLinkedList:
             else:
                 currentnode = currentnode.next
 
-    def extract_and_sort(self):
-        nodes = []
-        currentnode = self.first
-
-        # Extract all nodes as a list of tuples
-        if currentnode is not None:
-            while currentnode is not None:
-                nodes.append(currentnode.value)  # Add the tuple (key, value, description, uid)
-                currentnode = currentnode.next
-
-
-            # Perform merge sort on the nodes based on the key (alphabetically)
-            sorted_nodes = self.merge_sort(nodes)
-
-            # Display the sorted results
-            for node in sorted_nodes:
-                if node is not None:
-                    print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
-                else:
-                    pass
-
-    def merge_sort(self, nodes):
-        if len(nodes) <= 1:
-            return nodes
-        else:
-            mid = len(nodes) // 2
-            left_half = self.merge_sort(nodes[:mid])
-            right_half = self.merge_sort(nodes[mid:])
-
-            return self.merge(left_half, right_half)
-
-    def merge(self, left, right):
-        sorted_list = []
-        i = j = 0
-
-        # Merge two sorted halves
-        while i < len(left) and j < len(right):
-            if left[i][0].lower() <= right[j][0].lower():  # Compare key (case-insensitive)
-                sorted_list.append(left[i])
-                i += 1
-            else:
-                sorted_list.append(right[j])
-                j += 1
-
-        # Append remaining elements
-        sorted_list.extend(left[i:])
-        sorted_list.extend(right[j:])
-
-        return sorted_list
 
 
 
@@ -218,12 +169,6 @@ class HashTable:
         else:
             print("Invalid input")
 
-
-    # def sort(self):
-
-
-
-
     def delete(self):
         uid = int(input("Please enter an ID number: "))
         bucket_index = (uid % 127)
@@ -258,14 +203,14 @@ class HashTable:
 
     def dply(self):
         for i in range(len(self.buckets)):
-            self.buckets[i].extract_and_sort()
+            mm = MS(self.buckets[i]).extract_and_sort()
+            print(mm)
 
 
 
 ht = HashTable()
 ht.hash('')
-# ht.put('','', '')
-# print(ht.search(''))
+
 
 while True:
         print("""Please enter a number
