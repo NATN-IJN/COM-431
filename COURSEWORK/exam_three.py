@@ -1,7 +1,6 @@
 from exam_node import Node
 
 import random
-
 class TuplesLinkedList:
     def __init__(self):
         self.first = None
@@ -33,46 +32,46 @@ class TuplesLinkedList:
         return None
 
 
-    def findkey(self, searchInput):
+    def findid(self, id):
         currentNode = self.first
         while currentNode is not None:
-            if currentNode.value[0] == searchInput:
-                print(f"Value: {currentNode.value[1]}, Description: {currentNode.value[2]}")
+            if currentNode.value[3] == id:
+                print(f"Age Rating: {currentNode.value[1]}, Genre: {currentNode.value[2]}")
                 return
             else:
                 currentNode = currentNode.next
         return
 
-    def findid(self, id):
+    def findname(self, id):
         currentNode = self.first
         while currentNode is not None:
             if currentNode.value[3] == id:
-                print(f"Value: {currentNode.value[1]}, Description: {currentNode.value[2]}")
+                print(f"Age Rating: {currentNode.value[1]}, Genre: {currentNode.value[2]}")
                 return
             else:
                 currentNode = currentNode.next
 
-    def dlt(self, poi):
+    def dlt(self, uid):
         currentnode = self.first
         while currentnode is not None:
-            if currentnode.value[0] == poi:
-                print(f" - {currentnode.value[0]} -  will be deleted")
+            if currentnode.value[3] == uid:
+                print(f"  Movie:  {currentnode.value[0]}  |  Age Rating: {currentnode.value[1]}  |  Genre: {currentnode.value[2]} -  will be deleted...")
                 currentnode.delete()
                 return
             else:
                 currentnode = currentnode.next
         return None
 
-    def sve(self, file_input):
+    def sve(self, uid):
         currentnode = self.first
         while currentnode is not None:
-            if currentnode.value[0] == file_input:
-                file_input = currentnode.value[0]
-                value = currentnode.value[1]
-                description = currentnode.value[2]
+            if currentnode.value[3] == uid:
+                name = currentnode.value[0]
+                age = currentnode.value[1]
+                genre = currentnode.value[2]
 
 
-                tupl = [f"  Name: {(file_input)}  |  Value: {(value)}  |  Description: {(description)}  "]
+                tupl = [f"  NAME: {(name)}  |  AGE: {(age)}  |  GENRE: {(genre)}  "]
                 with open('poi.txt', "a") as f:
                         f.write(f'{tupl}\n')
                 print(f"{tupl} will be saved")
@@ -80,7 +79,7 @@ class TuplesLinkedList:
 
         ans = 0
         while ans != "y" and ans != "n":
-            ans = input("Would you like to view saved  Points Of Interest? (y/n): ").lower()
+            ans = input("Would you like to view saved Movies? (y/n): ").lower()
             if ans == 'y':
                 with open('poi.txt', 'r') as f:
                    content = f.read()
@@ -104,18 +103,66 @@ class TuplesLinkedList:
         else:
             return None
 
-    # def display(self):
-    #     currentnode = self.first
-    #     slist = {}
-    #     if currentnode is not None:
-    #         while currentnode is not None:
-    #             slist.append(f"  Name: {currentnode.value[0]}  |  Value:  {currentnode.value[1]}  |  Description:  {currentnode.value[2]}  ")
-    #             print(slist)
-    #             return currentnode.value[0], currentnode.value[1], currentnode.value[2]
-    #     else:
-    #         return None
+    def return_id(self, key):
+        currentnode = self.first
+        while currentnode is not None:
+            if currentnode.value[0] == key:
+                return currentnode.value[3]
+            else:
+                currentnode = currentnode.next
 
-    # def sort_list(self):
+    def extract_and_sort(self):
+        nodes = []
+        currentnode = self.first
+
+        # Extract all nodes as a list of tuples
+        if currentnode is not None:
+            while currentnode is not None:
+                nodes.append(currentnode.value)  # Add the tuple (key, value, description, uid)
+                currentnode = currentnode.next
+
+
+            # Perform merge sort on the nodes based on the key (alphabetically)
+            sorted_nodes = self.merge_sort(nodes)
+
+            # Display the sorted results
+            for node in sorted_nodes:
+                if node is not None:
+                    print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
+                else:
+                    pass
+
+    def merge_sort(self, nodes):
+        if len(nodes) <= 1:
+            return nodes
+        else:
+            mid = len(nodes) // 2
+            left_half = self.merge_sort(nodes[:mid])
+            right_half = self.merge_sort(nodes[mid:])
+
+            return self.merge(left_half, right_half)
+
+    def merge(self, left, right):
+        sorted_list = []
+        i = j = 0
+
+        # Merge two sorted halves
+        while i < len(left) and j < len(right):
+            if left[i][0].lower() <= right[j][0].lower():  # Compare key (case-insensitive)
+                sorted_list.append(left[i])
+                i += 1
+            else:
+                sorted_list.append(right[j])
+                j += 1
+
+        # Append remaining elements
+        sorted_list.extend(left[i:])
+        sorted_list.extend(right[j:])
+
+        return sorted_list
+
+
+
 
 class HashTable:
     def __init__(self,size=127):
@@ -131,30 +178,45 @@ class HashTable:
             index+=1
         return hash_code
 
-    def put(self, key, value, description, uid):
-        self.key = key
-        self.value = value
-        self.description = description
+    def put(self, name, rating, genre, uid):
+        self.name = name
+        self.rating = rating
+        self.genre = genre
         self.uid = uid
-        key = input("Please enter a key")
-        value = input("Please enter a value")
-        description = input("Please enter a description")
-        uid =(random.randint(0,self.size))
-        hash_code = self.hash(key)
-        bucket_index = (hash_code%127) - uid
-        self.buckets[bucket_index].add(key, value, description, uid)
-        print(f"ID: {uid}")
+        name = input("Please enter Movie Name")
+        rating = input("Please Movie Age Rating")
+        genre = input("Please enter Movie Genre")
+        uid = random.randint(0,self.size)
+        uidstr = str(uid)
+        hash_code = self.hash(uidstr)
+        print(f"Your unique ID number is: {hash_code}")
+        bucket_index = (hash_code%127)
+        self.buckets[bucket_index].add(name, rating, genre, hash_code)
         return
 
     def search(self, key, uid):
         self.key = key
-        self.id = uid
+        self.uid = uid
+        print("""
+        Please enter a number:
+        1. Search by Movie Name
+        2. Search by ID""")
+        ans = input()
+        if ans == '1':
+            key = input("Please enter movie name")
+            for bucket in self.buckets:
+                userid = bucket.return_id(key)
+                if userid is not None:
+                    bucket.findname(userid)
+                    return
 
-        key = input("Please enter a key to search")
-        uid = int(input("Please enter the id number "))
-        code = self.hash(key)
-        bucket_index = (code % 127) - uid
-        return self.buckets[bucket_index].findkey(key)
+        elif ans == '2':
+            uid = int(input("Please enter the ID number "))
+            bucket_index = (uid % 127)
+            return self.buckets[bucket_index].findid(uid)
+
+        else:
+            print("Invalid input")
 
 
     # def sort(self):
@@ -163,23 +225,41 @@ class HashTable:
 
 
     def delete(self):
-        poi = input("Please enter a key to delete")
-        uid = int(input("Please enter the id number "))
-        hash_code = self.hash(poi)
-        bucket_index = (hash_code % 127) - uid
-        self.buckets[bucket_index].dlt(poi)
+        uid = int(input("Please enter an ID number: "))
+        bucket_index = (uid % 127)
+        self.buckets[bucket_index].dlt(uid)
         return
 
     def save(self):
-        file_input = input("Please enter a POI to save: ").lower()
-        uid = int(input("Please enter the id number "))
-        hash_code = self.hash(file_input)
-        bucket_index = (hash_code % 127) - uid
-        self.buckets[bucket_index].sve(file_input)
+        print("""
+                Please enter a number:
+                1. Search by Movie Name
+                2. Search by ID""")
+        ans = input()
+        if ans == '1':
+            key = input("Please enter movie name")
+            for bucket in self.buckets:
+                userid = bucket.return_id(key)
+                if userid is not None:
+                    bucket.sve(userid)
+                    return
+
+        elif ans == '2':
+            uid = int(input("Please enter the ID number: "))
+            bucket_index = (uid % 127)
+            self.buckets[bucket_index].sve(uid)
+            return
+
+
+    # def dply(self):
+    #     print("Sorting and displaying all points of interest:")
+    #     for i, bucket in enumerate(self.buckets):
+    #         print(self.buckets[i].extract_and_sort())
 
     def dply(self):
         for i in range(len(self.buckets)):
-                self.buckets[i].display()
+            self.buckets[i].extract_and_sort()
+
 
 
 ht = HashTable()
@@ -189,13 +269,12 @@ ht.hash('')
 
 while True:
         print("""Please enter a number
-          1. Add POI: 
-          2. Search POI: 
-          3. Delete POI: 
-          4. Save POI: 
-          5. Display POI: 
-          6. Sort: 
-          7. Exit: 
+          1. Add Movie: 
+          2. Search Movie: 
+          3. Delete Movie: 
+          4. Save Movie: 
+          5. Display Movies: 
+          6. Exit: 
           ---------------
           8. Enquiries: """)
 #Create menu
