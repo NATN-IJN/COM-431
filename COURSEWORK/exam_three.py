@@ -113,13 +113,16 @@ class TuplesLinkedList:
 
 
 
-
+    def f (self):
+        return self.first
 
 class HashTable:
     def __init__(self,size=127):
         self.first = None
         self.size = size
         self.buckets = [TuplesLinkedList() for i in range(self.size)]
+
+
 
     def hash(self,key):
         hash_code = 0
@@ -202,11 +205,22 @@ class HashTable:
     #         print(self.buckets[i].extract_and_sort())
 
     def dply(self):
-        for i in range(len(self.buckets)):
-            mm = MS(self.buckets[i]).extract_and_sort()
-            print(mm)
+        # Display the contents of all buckets and sort their entries
+        print("Displaying saved movies:")
 
+        for bucket in (self.buckets):
+            if bucket is None:
+                print("No saved Movies")
+                continue
 
+            else:
+                # Perform merge sort and display sorted data
+                ms = MS(bucket.f())  # Pass the head of the linked list to MS
+                ms.extract_and_sort()
+
+    # def dply(self):
+    #     for i in range(len(self.buckets)):
+    #             self.buckets[i].display()
 
 ht = HashTable()
 ht.hash('')
@@ -223,8 +237,8 @@ while True:
           ---------------
           8. Enquiries: """)
 #Create menu
-        menu = int(input())
         try:
+            menu = int(input())
             if menu == 1:
                 ht.put('', '', '', '')
             elif menu == 2:
@@ -239,9 +253,6 @@ while True:
                 print("Application terminated")
                 break
             else:
-                print("Please enter a valid menu option")
-
+                print("Invalid input!, please enter a number between 1 and 6")
         except ValueError:
-            print("Invalid input!")
-        except TypeError:
-            print("Invalid input!, this option does not exist")
+            print("Invalid input!, please enter a number")
