@@ -6,7 +6,7 @@ class TuplesLinkedList:
         self.first = None
         self.last = None
 
-
+#Adds newly created nodes to create "TuplesLinkedList"
     def add(self, key, value, description, uid):
         key_value = (key, value, description, uid)
         n = Node(key_value)
@@ -19,38 +19,18 @@ class TuplesLinkedList:
             self.last = n
             print(f"Successfully added: {n}")
 
-
-    def get(self, index):
-        counter = 0
+#Using ID generated from randint function, this method iterates through list to find index with match
+    def findid(self, uid):
         currentNode = self.first
         while currentNode is not None:
-            if counter == index:
-                return currentNode
-            else:
-                currentNode = currentNode.next
-                counter += 1
-        return None
-
-
-    def findid(self, id):
-        currentNode = self.first
-        while currentNode is not None:
-            if currentNode.value[3] == id:
+            if currentNode.value[3] == uid:
                 print(f"Age Rating: {currentNode.value[1]}, Genre: {currentNode.value[2]}")
                 return
             else:
                 currentNode = currentNode.next
         return
 
-    def findname(self, id):
-        currentNode = self.first
-        while currentNode is not None:
-            if currentNode.value[3] == id:
-                print(f"Age Rating: {currentNode.value[1]}, Genre: {currentNode.value[2]}")
-                return
-            else:
-                currentNode = currentNode.next
-
+#Using ID , method iterates through linked list to find matching value. It then calls delete method from Node class
     def dlt(self, uid):
         currentnode = self.first
         while currentnode is not None:
@@ -62,6 +42,7 @@ class TuplesLinkedList:
                 currentnode = currentnode.next
         return None
 
+#Using ID it locates node to save
     def sve(self, uid):
         currentnode = self.first
         while currentnode is not None:
@@ -76,6 +57,7 @@ class TuplesLinkedList:
                         f.write(f'{tupl}\n')
                 print(f"{tupl} will be saved")
                 break
+            print("Movie not found:")
 
         ans = 0
         while ans != "y" and ans != "n":
@@ -91,18 +73,7 @@ class TuplesLinkedList:
             else:
                 print("Please enter y or n")
 
-    def display(self):
-        currentnode = self.first
-        newdict = {}
-        if currentnode is not None:
-            while currentnode is not None:
-                newdict.update({currentnode.value[0]: [currentnode.value[1], currentnode.value[2], currentnode.value[3]]})
-                sdict1 = dict(sorted(newdict.items()))
-                print(sdict1)
-                return currentnode.value[0], currentnode.value[1], currentnode.value[2]
-        else:
-            return None
-
+#Finds matching node using key provided by user and then returns the ID number
     def return_id(self, key):
         currentnode = self.first
         while currentnode is not None:
@@ -111,11 +82,6 @@ class TuplesLinkedList:
             else:
                 currentnode = currentnode.next
 
-
-
-    def f (self):
-        return self.first
-
 class HashTable:
     def __init__(self,size=127):
         self.first = None
@@ -123,7 +89,7 @@ class HashTable:
         self.buckets = [TuplesLinkedList() for i in range(self.size)]
 
 
-
+#Unique formula for calculating hash code, iterates through each character in key (ID number) and finds ASCII value using "ord"
     def hash(self,key):
         hash_code = 0
         index = 0
@@ -132,11 +98,8 @@ class HashTable:
             index+=1
         return hash_code
 
-    def put(self, name, rating, genre, uid):
-        self.name = name
-        self.rating = rating
-        self.genre = genre
-        self.uid = uid
+#Asks users to input movie details, then passes through the add function.
+    def put(self):
         name = input("Please enter Movie Name")
         rating = input("Please Movie Age Rating")
         genre = input("Please enter Movie Genre")
@@ -147,85 +110,79 @@ class HashTable:
         bucket_index = (hash_code%127)
         self.buckets[bucket_index].add(name, rating, genre, hash_code)
         return
-
-    def search(self, key, uid):
-        self.key = key
-        self.uid = uid
+#Enables user a choice of how to search. It then calls findid/return_id function depending on option
+    def search(self):
         print("""
         Please enter a number:
         1. Search by Movie Name
-        2. Search by ID""")
-        ans = input()
-        if ans == '1':
-            key = input("Please enter movie name")
-            for bucket in self.buckets:
-                userid = bucket.return_id(key)
-                if userid is not None:
-                    bucket.findname(userid)
-                    return
+        2. Search by ID
+        NOTE *** Please search by ID if there are other movies with the same movie name ***""")
+        try:
+            ans = input()
+            if ans == '1':
+                key = input("Please enter movie name")
+                for bucket in self.buckets:
+                    userid = bucket.return_id(key)
+                    if userid is not None:
+                        bucket.findid(userid)
+                        return
 
-        elif ans == '2':
-            uid = int(input("Please enter the ID number "))
-            bucket_index = (uid % 127)
-            return self.buckets[bucket_index].findid(uid)
-
-        else:
-            print("Invalid input")
-
-    def delete(self):
-        uid = int(input("Please enter an ID number: "))
-        bucket_index = (uid % 127)
-        self.buckets[bucket_index].dlt(uid)
-        return
-
-    def save(self):
-        print("""
-                Please enter a number:
-                1. Search by Movie Name
-                2. Search by ID""")
-        ans = input()
-        if ans == '1':
-            key = input("Please enter movie name")
-            for bucket in self.buckets:
-                userid = bucket.return_id(key)
-                if userid is not None:
-                    bucket.sve(userid)
-                    return
-
-        elif ans == '2':
-            uid = int(input("Please enter the ID number: "))
-            bucket_index = (uid % 127)
-            self.buckets[bucket_index].sve(uid)
-            return
-
-
-    # def dply(self):
-    #     print("Sorting and displaying all points of interest:")
-    #     for i, bucket in enumerate(self.buckets):
-    #         print(self.buckets[i].extract_and_sort())
-
-    def dply(self):
-        # Display the contents of all buckets and sort their entries
-        print("Displaying saved movies:")
-
-        for bucket in (self.buckets):
-            if bucket is None:
-                print("No saved Movies")
-                continue
+            elif ans == '2':
+                uid = int(input("Please enter the ID number "))
+                bucket_index = (uid % 127)
+                return self.buckets[bucket_index].findid(uid)
 
             else:
-                # Perform merge sort and display sorted data
-                ms = MS(bucket.f())  # Pass the head of the linked list to MS
-                ms.extract_and_sort()
+                print("Invalid input! please enter 1 or 2")
+        except Exception as e:
+            print("movie does not exist", e)
 
-    # def dply(self):
-    #     for i in range(len(self.buckets)):
-    #             self.buckets[i].display()
+#Calls dlt method from "Tupleslinkedlist"
+    def delete(self):
+        uid = int(input("Please enter movie ID : "))
+        bucket_index = (uid % 127)
+        self.buckets[bucket_index].dlt(uid)
 
+#calls save method from  "TuplesLinkedList"
+    def save(self):
+        print("Please enter movie ID: ")
+        try:
+            ans = int(input())
+            bucket_index = (ans % 127)
+            if self.buckets[bucket_index] is not None:
+                self.buckets[bucket_index].sve(ans)
+                return
+        except Exception as e:
+            print("Movie not found", e)
+
+    def dply(self):
+            print("Displaying all saved movies:")
+
+            # Collect all entries from all buckets
+            all_nodes = []
+            for bucket in self.buckets:
+                current = bucket.first
+                while current:
+                    all_nodes.append(current.value)  # Collect values from linked list
+                    current = current.next
+
+            if not all_nodes:
+                print("No movies found.")
+                return
+
+            # Sort the aggregated list using MS
+            ms = MS(None)  # Pass None because we're sorting a list, not a linked list
+            sorted_nodes = ms.merge_sort(all_nodes)
+
+            # Display sorted results
+            for node in sorted_nodes:
+                print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
+
+#Calls "Hashtable" class
 ht = HashTable()
 ht.hash('')
 
-
+#Loops menu until "6" key is entered
 while True:
         print("""Please enter a number
           1. Add Movie: 
@@ -236,13 +193,12 @@ while True:
           6. Exit: 
           ---------------
           8. Enquiries: """)
-#Create menu
         try:
             menu = int(input())
             if menu == 1:
-                ht.put('', '', '', '')
+                ht.put()
             elif menu == 2:
-                 ht.search('', '')
+                 ht.search()
             elif menu == 3:
                 ht.delete()
             elif menu == 4:

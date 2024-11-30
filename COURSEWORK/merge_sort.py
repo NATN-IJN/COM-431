@@ -1,25 +1,19 @@
 class MS:
     def __init__(self, first):
         self.first = first
+
     def extract_and_sort(self):
         nodes = []
         currentnode = self.first
-
         # Sort all nodes into "nodes" list
-        if currentnode is not None:
-            while currentnode is not None:
-                nodes.append(currentnode.value)
-                currentnode = currentnode.next
 
-            # call merge sort (alphabetically)
-            sorted_nodes = self.merge_sort(nodes)
+        while currentnode is not None:
+            nodes.append(currentnode.value)
+            currentnode = currentnode.next
 
-            # Display the sorted results
-            for node in sorted_nodes:
-                if node is not None:
-                    print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
-                else:
-                    pass
+        # call merge sort (alphabetically)
+        sorted_nodes = self.merge_sort(nodes)
+
 
 
     def merge_sort(self, nodes):
@@ -29,7 +23,6 @@ class MS:
             mid = len(nodes) // 2
             left_half = self.merge_sort(nodes[:mid])
             right_half = self.merge_sort(nodes[mid:])
-
             return self.merge(left_half, right_half)
 
 
@@ -53,6 +46,5 @@ class MS:
         # Append remaining elements
         sorted_list.extend(left[i:])
         sorted_list.extend(right[j:])
-
         return sorted_list
 
