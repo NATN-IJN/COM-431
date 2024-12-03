@@ -1,5 +1,7 @@
-from exam_node import Node
+from queue import Queue
+from node import Node
 from merge_sort import MS
+
 import random
 class TuplesLinkedList:
     def __init__(self):
@@ -17,7 +19,7 @@ class TuplesLinkedList:
         else:
             self.last.link(n)
             self.last = n
-            print(f"Successfully added: {n}")
+            print(f"Successfully added {n}")
 
 #Using ID generated from randint function, this method iterates through list to find index with match
     def findid(self, uid):
@@ -100,9 +102,9 @@ class HashTable:
 
 #Asks users to input movie details, then passes through the add function.
     def put(self):
-        name = input("Please enter Movie Name")
-        rating = input("Please Movie Age Rating")
-        genre = input("Please enter Movie Genre")
+        name = input("Please enter Movie Name: ")
+        rating = input("Please Movie Age Rating: ")
+        genre = input("Please enter Movie Genre: ")
         uid = random.randint(0,self.size)
         uidstr = str(uid)
         hash_code = self.hash(uidstr)
@@ -120,7 +122,7 @@ class HashTable:
         try:
             ans = input()
             if ans == '1':
-                key = input("Please enter movie name")
+                key = input("Please enter movie name: ")
                 for bucket in self.buckets:
                     userid = bucket.return_id(key)
                     if userid is not None:
@@ -128,7 +130,7 @@ class HashTable:
                         return
 
             elif ans == '2':
-                uid = int(input("Please enter the ID number "))
+                uid = int(input("Please enter the ID number: "))
                 bucket_index = (uid % 127)
                 return self.buckets[bucket_index].findid(uid)
 
@@ -179,8 +181,10 @@ class HashTable:
                 print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
 
 #Calls "Hashtable" class
+enq = Queue()
 ht = HashTable()
 ht.hash('')
+
 
 #Loops menu until "6" key is entered
 while True:
@@ -208,6 +212,25 @@ while True:
             elif menu == 6:
                 print("Application terminated")
                 break
+
+
+            elif menu == 8:
+                print(""" 
+                Please enter a number:
+                1. Add query:
+                2. Answer query:
+                3. Show query's:""")
+                ans = input()
+                if ans == '1':
+                    query = input("Enter your query: ")
+                    enq.enqueue(query)
+                    enq.display()
+                if ans == '2':
+                    enq.dequeue()
+                if ans == '3':
+                    enq.display()
+                else:
+                    print("Invalid Input")
             else:
                 print("Invalid input!, please enter a number between 1 and 6")
         except ValueError:
