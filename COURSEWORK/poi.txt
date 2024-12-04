@@ -1,7 +1,0 @@
-['  Name: cat  |  Value: animal  |  Description: house pet  ']
-['  Name: pig  |  Value: oink  |  Description: bacon  ']
-['  NAME: 53462  |  AGE: U  |  GENRE: Christmas  ']
-['  NAME: E  |  AGE: U  |  GENRE: Christmas  ']
-['  NAME: Miricale on 34th Street  |  AGE: U  |  GENRE: Christmas  ']
-['  NAME: The Batman  |  AGE: 15  |  GENRE: Action  ']
-['  NAME: Elf  |  AGE: U  |  GENRE: Christmas  ']
