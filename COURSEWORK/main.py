@@ -57,17 +57,17 @@ class TuplesLinkedList:
 
 
                 tupl = [f"  NAME: {(name)}  |  AGE: {(age)}  |  GENRE: {(genre)}  "]
-                with open('poi.txt', "a") as f:
+                with open('movie.txt', "a") as f:
                         f.write(f'{tupl}\n')
                 print(f"{tupl} will be saved")
                 break
-            print("Movie not found:")
+        print("Movie not found:")
 
         ans = 0
         while ans != "y" and ans != "n":
             ans = input("Would you like to view saved Movies? (y/n): ").lower()
             if ans == 'y':
-                with open('poi.txt', 'r') as f:
+                with open('movie.txt', 'r') as f:
                    content = f.read()
                 print(content)
 
@@ -93,7 +93,8 @@ class HashTable:
         self.buckets = [TuplesLinkedList() for i in range(self.size)]
 
 
-#Unique formula for calculating hash code, iterates through each character in key (ID number) and finds ASCII value using "ord"
+#Unique formula for calculating hash code, iterates through each character in key (ID number)
+# and finds ASCII value using "ord"
     def hash(self,key):
         hash_code = 0
         index = 0
