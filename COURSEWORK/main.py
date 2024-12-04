@@ -1,16 +1,18 @@
+#Imorts all relevant classes
 from queue import Queue
 from node import Node
 from merge_sort import MS
-
 import random
+
 class TuplesLinkedList:
+#Initializes head and tail of Linked List to None
     def __init__(self):
         self.first = None
         self.last = None
 
 #Adds newly created nodes to create "TuplesLinkedList"
-    def add(self, key, value, description, uid):
-        key_value = (key, value, description, uid)
+    def add(self, name, value, description, uid):
+        key_value = (name, value, description, uid)
         n = Node(key_value)
         if self.first is None:
             self.first = n
