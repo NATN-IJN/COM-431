@@ -1,5 +1,5 @@
 #Create class: this will act as the database for the POIs
-from exam_node import Node
+from node import Node
 class PointOfInterest:
     def __init__(self):
         self.pois = []

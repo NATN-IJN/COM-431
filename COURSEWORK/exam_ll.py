@@ -1,4 +1,4 @@
-from exam_node import Node
+from node import Node
 
 class TupleLinkedLists:
     def __init__(self):
