@@ -5,7 +5,7 @@ class Queue:
     def enqueue(self, query):
         self.enquiries.append(query)
         print(f"Query: *{query}* has been added to the queue.")
-        return query
+        return
 
     def dequeue(self):
         if len(self.enquiries) == 0:
@@ -15,10 +15,16 @@ class Queue:
             return self.enquiries.pop(0)
 
     def display(self):
-        for index, query in enumerate(self.enquiries):
-            print(index, query)
+
+            if len(self.enquiries) == 0:
+                print("No enquiries at the moment")
+                return
+            else:
+                for index, query in enumerate(self.enquiries):
+                    print(index, query)
+                return
             # else:
-            #     print("No enquiries at the moment")
+
 
 
 

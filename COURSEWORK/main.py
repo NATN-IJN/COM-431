@@ -49,20 +49,21 @@ class TuplesLinkedList:
 #Using ID it locates node to save
     def sve(self, uid):
         currentnode = self.first
+        found = False
         while currentnode is not None:
             if currentnode.value[3] == uid:
                 name = currentnode.value[0]
                 age = currentnode.value[1]
                 genre = currentnode.value[2]
-
-
                 tupl = [f"  NAME: {(name)}  |  AGE: {(age)}  |  GENRE: {(genre)}  "]
                 with open('poi.txt', "a") as f:
                         f.write(f'{tupl}\n')
                 print(f"{tupl} will be saved")
+                found = True
                 break
-            print("Movie not found:")
 
+        if not found:
+            print("Movie not found")
         ans = 0
         while ans != "y" and ans != "n":
             ans = input("Would you like to view saved Movies? (y/n): ").lower()
@@ -70,10 +71,8 @@ class TuplesLinkedList:
                 with open('poi.txt', 'r') as f:
                    content = f.read()
                 print(content)
-
             elif ans == 'n':
                 return None
-
             else:
                 print("Please enter y or n")
 
@@ -153,16 +152,16 @@ class HashTable:
         try:
             ans = int(input())
             bucket_index = (ans % 127)
-            if self.buckets[bucket_index] is not None:
-                self.buckets[bucket_index].sve(ans)
-                return
-        except Exception as e:
-            print("Movie not found", e)
+            self.buckets[bucket_index].sve(ans)
+            return
+        except NameError:
+            return "Movie not found"
+
 
     def dply(self):
             print("Displaying all saved movies:")
 
-            # Collect all entries from all buckets
+            # Collects all entries from all buckets
             all_nodes = []
             for bucket in self.buckets:
                 current = bucket.first
@@ -174,11 +173,11 @@ class HashTable:
                 print("No movies found.")
                 return
 
-            # Sort the aggregated list using MS
-            ms = MS(None)  # Pass None because we're sorting a list, not a linked list
+            # calls MS class to sort list
+            ms = MS(None)  # Passes None because we're sorting a list, not a linked list
             sorted_nodes = ms.merge_sort(all_nodes)
 
-            # Display sorted results
+            # Displays sorted results
             for node in sorted_nodes:
                 print(f"Name: {node[0]}, Age Rating: {node[1]}, Genre: {node[2]}, UID: {node[3]}")
 
@@ -215,24 +214,31 @@ while True:
                 print("Application terminated")
                 break
 
-
             elif menu == 8:
                 print(""" 
                 Please enter a number:
                 1. Add query:
                 2. Answer query:
                 3. Show query's:""")
+
+
                 ans = input()
                 if ans == '1':
                     query = input("Enter your query: ")
                     enq.enqueue(query)
                     enq.display()
+
                 if ans == '2':
                     enq.dequeue()
+                    enq.display()
+
                 if ans == '3':
                     enq.display()
-                else:
-                    print("Invalid Input")
+
+
+
+
+
             else:
                 print("Invalid input!, please enter a number between 1 and 6")
         except ValueError:

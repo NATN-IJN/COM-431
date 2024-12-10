@@ -1,0 +1,3 @@
+
+['  NAME: Focus  |  AGE: 12  |  GENRE: War  ']
+['  NAME: The Lion King  |  AGE: U  |  GENRE: Animation  ']

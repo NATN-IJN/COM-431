@@ -21,4 +21,4 @@ class Node:
 
 
     def __str__(self):
-        return f"movie containing: {self.value}
+        return f"movie containing: {self.value}"
