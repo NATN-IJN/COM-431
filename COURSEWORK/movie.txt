@@ -1,2 +1,1 @@
-['  NAME: Elf  |  AGE: U  |  GENRE: Christmas  ']
 ['  NAME: Fight Club  |  AGE: 15  |  GENRE: Action  ']
